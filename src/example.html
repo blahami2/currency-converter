@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Currency Exchange</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+<nav class="container-fluid">
+    <ul>
+        <li><strong>Currency Exchange</strong></li>
+    </ul>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Rates</a></li>
+        <li><a href="#" role="button">Contact</a></li>
+    </ul>
+</nav>
+<main class="container">
+    <div class="grid">
+        <section>
+            <hgroup>
+                <h2>Exchange Rates</h2>
+                <h3>Current rates</h3>
+            </hgroup>
+            <p>Exchange rates for popular currencies:</p>
+            <ul>
+                <li>USD: 22.50 CZK</li>
+                <li>EUR: 25.50 CZK</li>
+                <li>GBP: 30.50 CZK</li>
+                <li>JPY: 0.20 CZK</li>
+            </ul>
+        </section>
+        <section>
+            <hgroup>
+                <h2>Currency Converter</h2>
+                <h3>Convert CZK to another currency</h3>
+            </hgroup>
+            <form class="grid" onsubmit="convertCurrency(event)">
+                <input type="number" id="czkAmount" name="czkAmount" placeholder="Amount in CZK" aria-label="Amount in CZK" required>
+                <select id="currency" name="currency" aria-label="Select currency" required>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="JPY">JPY</option>
+                </select>
+                <!--                <button type="submit">Convert</button>-->
+            </form>
+            <p id="result"></p>
+        </section>
+    </div>
+</main>
+<footer class="container">
+    <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
+</footer>
+
+<script>
+    const exchangeRates = {
+        USD: 22.50,
+        EUR: 25.50,
+        GBP: 30.50,
+        JPY: 0.20
+    };
+
+    function convertCurrency(event) {
+        event.preventDefault();
+        const czkAmount = document.getElementById('czkAmount').value;
+        const currency = document.getElementById('currency').value;
+        const rate = exchangeRates[currency];
+        const convertedAmount = (czkAmount / rate).toFixed(2);
+        document.getElementById('result').innerText = `${czkAmount} CZK is equal to ${convertedAmount} ${currency}`;
+    }
+</script>
+</body>
+</html>

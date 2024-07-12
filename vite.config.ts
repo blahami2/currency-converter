@@ -1,7 +1,17 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(      {          include: [/\.jsx$/, /\.tsx$/, /\.ts$/],}      )],
-})
+  plugins: [
+    react({
+      include: [/\.jsx$/, /\.tsx$/, /\.ts$/],
+    }),
+  ],
+  server: {
+    hmr: true,
+    watch: {
+      usePolling: true,
+    },
+  },
+});

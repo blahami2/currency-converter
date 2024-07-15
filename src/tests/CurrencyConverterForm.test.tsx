@@ -3,41 +3,49 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CurrencyConverterForm from "../components/CurrencyConverterForm";
 
-test("renders Currency Converter heading", () => {
+let inputElement: HTMLInputElement;
+let selectElement: HTMLSelectElement;
+
+beforeEach(() => {
+  // given
   render(<CurrencyConverterForm />);
+  inputElement = screen.getByTestId("amount-input") as HTMLInputElement;
+  selectElement = screen.getByTestId("currency-select") as HTMLSelectElement;
+});
+
+test("renders Currency Converter heading", () => {
+  // when
   const headingElement = screen.getByRole("heading", {
     name: /Currency Converter/i,
   });
+  // then
   expect(headingElement).toBeInTheDocument();
 });
 
 test("renders Convert CZK to another currency heading", () => {
-  render(<CurrencyConverterForm />);
+  // when
   const headingElement = screen.getByRole("heading", {
     name: /Convert CZK to another currency/i,
   });
+  // then
   expect(headingElement).toBeInTheDocument();
 });
 
 test("updates amount state when input value changes", () => {
-  render(<CurrencyConverterForm />);
-  const inputElement = screen.getByTestId("amount-input") as HTMLInputElement;
+  // when
   fireEvent.change(inputElement, { target: { value: "100" } });
+  // then
   expect(inputElement.value).toBe("100");
 });
 
 test("updates currency state when select value changes", () => {
-  render(<CurrencyConverterForm />);
-  const selectElement = screen.getByTestId("currency-select") as HTMLSelectElement;
+  // when
   fireEvent.change(selectElement, { target: { value: "EUR" } });
+  // then
   expect(selectElement.value).toBe("EUR");
 });
 
 test("calculates and displays converted amount when amount or currency is changed", () => {
-  // given
-  render(<CurrencyConverterForm />);
-  const inputElement = screen.getByTestId("amount-input");
-  const selectElement = screen.getByTestId("currency-select");
   // when#1
   // - set amount and currency
   fireEvent.change(inputElement, { target: { value: "100" } });

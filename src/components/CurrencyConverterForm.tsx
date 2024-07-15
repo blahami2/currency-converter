@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useExchangeRates } from "../hooks/useExchangeRates";
 
 const Form = styled.form`
   display: flex;
@@ -19,39 +20,7 @@ const Select = styled.select`
 `;
 
 const CurrencyConverterForm: React.FC = () => {
-  const data = useMemo(
-    () => [
-      {
-        country: "United States",
-        currency: "Dollar",
-        amount: 1,
-        code: "USD",
-        rate: 21.6,
-      },
-      {
-        country: "Eurozone",
-        currency: "Euro",
-        amount: 1,
-        code: "EUR",
-        rate: 25.5,
-      },
-      {
-        country: "Great Britain",
-        currency: "Pound",
-        amount: 1,
-        code: "GBP",
-        rate: 29.7,
-      },
-      {
-        country: "Switzerland",
-        currency: "Franc",
-        amount: 100,
-        code: "CHF",
-        rate: 23.6,
-      },
-    ],
-    []
-  );
+  const { data } = useExchangeRates();
 
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState("USD");
@@ -78,7 +47,6 @@ const CurrencyConverterForm: React.FC = () => {
           value={amount}
           onChange={(e) => {
             setAmount(parseFloat(e.target.value));
-            //             updateResult()
           }}
           placeholder="Amount in CZK"
           data-testid="amount-input"
@@ -87,7 +55,6 @@ const CurrencyConverterForm: React.FC = () => {
           value={currency}
           onChange={(e) => {
             setCurrency(e.target.value);
-            //           updateResult()
           }}
           data-testid="currency-select"
         >

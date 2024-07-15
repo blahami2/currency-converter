@@ -81,6 +81,7 @@ const CurrencyConverterForm: React.FC = () => {
             //             updateResult()
           }}
           placeholder="Amount in CZK"
+          data-testid="amount-input"
         />
         <Select
           value={currency}
@@ -88,6 +89,7 @@ const CurrencyConverterForm: React.FC = () => {
             setCurrency(e.target.value);
             //           updateResult()
           }}
+          data-testid="currency-select"
         >
           {data?.map((rate) => (
             <option key={rate.code} value={rate.code}>

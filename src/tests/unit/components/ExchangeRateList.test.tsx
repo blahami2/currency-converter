@@ -39,5 +39,7 @@ beforeEach(() => {
 test("should display available rates", () => {
   // when
   // then
-  expect(tableElement.textContent).toContain("CurrencyRate" + rates.map((rate) => `${rate.code}${rate.rate}`).join(""));
+  expect(tableElement.textContent).toContain(
+    "CountryCurrencyRate" + rates.map((rate) => `${rate.country}${rate.code}${rate.rate}`).join("")
+  );
 });

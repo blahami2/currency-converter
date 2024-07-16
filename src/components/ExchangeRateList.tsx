@@ -26,12 +26,14 @@ const ExchangeRateList: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error?.message}</div>;
 
+  // TODO add all data - amount, currency name, ...
   return (
     <div>
       <h2>Exchange Rates</h2>
       <Table data-testid="currency-table">
         <thead>
           <TableRow>
+            <TableHeader>Country</TableHeader>
             <TableHeader>Currency</TableHeader>
             <TableHeader>Rate</TableHeader>
           </TableRow>
@@ -39,6 +41,7 @@ const ExchangeRateList: React.FC = () => {
         <tbody>
           {data?.map((rate) => (
             <TableRow key={rate.code}>
+              <TableData>{rate.country}</TableData>
               <TableData>{rate.code}</TableData>
               <TableData>{rate.rate}</TableData>
             </TableRow>

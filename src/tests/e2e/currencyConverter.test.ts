@@ -25,10 +25,11 @@ test.describe("Currency Converter", () => {
     // - wait for the currency list to be displayed
     const resultText = await page.textContent('[data-testid="currency-table"]');
     // then
-    expect(resultText).toContain(
-      `Currency Rate
-      USD 22.5
-      EUR 26.5`.replace(/\s/g, "")
+    // - check if the table contains the expected data (ignore whitespaces)
+    expect(resultText?.replace(/\s/g, "")).toContain(
+      `Country Currency Rate
+      USA USD 22.5
+      Eurozone EUR 26.5`.replace(/\s/g, "")
     );
   });
 

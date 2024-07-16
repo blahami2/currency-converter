@@ -11,14 +11,9 @@ const TableHeader = styled.th`
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
-  background-color: #f2f2f2;
 `;
 
-const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
+const TableRow = styled.tr``;
 
 const TableData = styled.td`
   border: 1px solid #ddd;

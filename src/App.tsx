@@ -1,17 +1,18 @@
 import React from "react";
+import "./App.css";
 import ExchangeRateList from "./components/ExchangeRateList";
 import CurrencyConverterForm from "./components/CurrencyConverterForm";
 
 const App: React.FC = () => {
   return (
-    <div className="grid">
+    <div className="app">
       <h1>Currency Exchange</h1>
-      <section>
+      <div className="section">
         <ExchangeRateList />
-      </section>
-      <section>
+      </div>
+      <div className="section">
         <CurrencyConverterForm />
-      </section>
+      </div>
     </div>
   );
 };

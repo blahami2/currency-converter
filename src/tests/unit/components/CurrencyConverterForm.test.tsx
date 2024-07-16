@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
-import CurrencyConverterForm from "../components/CurrencyConverterForm";
+import CurrencyConverterForm from "../../../components/CurrencyConverterForm";
 
 // mock the useQuery hook
 jest.mock("@tanstack/react-query", () => ({
@@ -24,8 +24,8 @@ beforeEach(() => {
   // - mock implementation of useQuery
   (useQuery as jest.Mock).mockImplementation(() => ({
     data: rates,
-    isLoading: false,
     error: null,
+    isLoading: false,
   }));
   // - render and get form elements
   const queryClient = new QueryClient();
@@ -45,6 +45,13 @@ test("renders Currency Converter heading", () => {
   });
   // then
   expect(headingElement).toBeInTheDocument();
+});
+
+test("handles empty amount", () => {
+  // when
+  fireEvent.change(inputElement, { target: { value: "" } });
+  // then
+  expect(screen.getByText(/Converted Amount: 0.00 USD/i)).toBeInTheDocument();
 });
 
 test("renders Convert CZK to another currency heading", () => {

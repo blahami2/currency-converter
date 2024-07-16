@@ -13,5 +13,13 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
+    // Proxy /api requests to the real API to
+    proxy: {
+      "/api": {
+        target: "https://www.cnb.cz",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 });

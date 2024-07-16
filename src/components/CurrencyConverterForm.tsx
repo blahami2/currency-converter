@@ -20,33 +20,38 @@ const Select = styled.select`
 `;
 
 const CurrencyConverterForm: React.FC = () => {
-  const { data } = useExchangeRates();
+  const { data, error, isLoading } = useExchangeRates();
 
-  const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState("USD");
-  const [result, setResult] = useState<number | null>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const rate = data?.find((rate) => rate.code === currency)?.rate || 1;
-    setResult(amount / rate);
-  };
+  const [amount, setAmount] = useState<number>(0);
+  const [currency, setCurrency] = useState("");
+  const [result, setResult] = useState<number | null>(0);
 
   useEffect(() => {
+    // set default currency upon data loaded
+    if (data && data.length > 0) {
+      setCurrency(data[0].code);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    // calculate result when amount or currency changes or data load
     const rate = data?.find((rate) => rate.code === currency)?.rate || 1;
     amount && setResult(amount / rate);
   }, [amount, currency, data]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching data: {error?.message}</div>;
 
   return (
     <div>
       <h2>Currency Converter</h2>
       <h3>Convert CZK to another currency</h3>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Input
           type="number"
           value={amount}
           onChange={(e) => {
-            setAmount(parseFloat(e.target.value));
+            setAmount(e.target.value ? parseFloat(e.target.value) : 0);
           }}
           placeholder="Amount in CZK"
           data-testid="amount-input"
@@ -64,8 +69,8 @@ const CurrencyConverterForm: React.FC = () => {
             </option>
           ))}
         </Select>
-        {result && (
-          <div>
+        {result != null && (
+          <div data-testid="result">
             Converted Amount: {result.toFixed(2)} {currency}
           </div>
         )}

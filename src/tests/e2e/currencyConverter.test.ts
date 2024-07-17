@@ -27,9 +27,9 @@ test.describe("Currency Converter", () => {
     // then
     // - check if the table contains the expected data (ignore whitespaces)
     expect(resultText?.replace(/\s/g, "")).toContain(
-      `Country Currency Rate
-      USA USD 22.5
-      Eurozone EUR 26.5`.replace(/\s/g, "")
+      `Country  Currency Amount Code Rate
+       USA      Dollar   1      USD  22.5
+       Eurozone Euro     1      EUR  26.5`.replace(/\s/g, "")
     );
   });
 

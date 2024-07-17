@@ -40,6 +40,7 @@ test("should display available rates", () => {
   // when
   // then
   expect(tableElement.textContent).toContain(
-    "CountryCurrencyRate" + rates.map((rate) => `${rate.country}${rate.code}${rate.rate}`).join("")
+    "CountryCurrencyAmountCodeRate" +
+      rates.map((rate) => `${rate.country}${rate.currency}${rate.amount}${rate.code}${rate.rate}`).join("")
   );
 });

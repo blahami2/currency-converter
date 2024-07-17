@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useExchangeRates } from "../hooks/useExchangeRates";
 import { ExchangeRate } from "../models/ExchangeRate";
 import { floorWithFixedPrecision } from "../utils/math";
+import InputWithUnit from "./InputWithUnit";
 
 const Form = styled.form`
   display: flex;
@@ -27,9 +28,9 @@ function calculateAmountInCzk(amount: number, rate: ExchangeRate): number {
 const CurrencyConverterForm: React.FC = () => {
   const { data, error, isLoading } = useExchangeRates();
 
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | null>(null);
   const [currency, setCurrency] = useState("");
-  const [result, setResult] = useState<number | null>(0);
+  const [result, setResult] = useState<number>(0);
 
   useEffect(() => {
     // set default currency upon data loaded
@@ -43,46 +44,66 @@ const CurrencyConverterForm: React.FC = () => {
     const exchangeRate = data?.find((rate) => rate.code === currency);
     if (amount && exchangeRate) {
       setResult(calculateAmountInCzk(amount, exchangeRate));
+    } else {
+      setResult(0);
     }
   }, [amount, currency, data]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error?.message}</div>;
 
+  // TODO fix formatting
+
   return (
     <div>
       <h2>Currency Converter</h2>
       <h3>Convert CZK to another currency</h3>
       <Form>
-        <Input
-          type="number"
-          value={amount}
-          onChange={(e) => {
-            // TODO add CZK as unit (create a react component), add restrictions (e.g. only positive numbers, only 2 decimals)
-            setAmount(e.target.value ? parseFloat(e.target.value) : 0);
-          }}
-          placeholder="Amount in CZK"
-          data-testid="amount-input"
-        />
-        <Select
-          value={currency}
-          onChange={(e) => {
-            setCurrency(e.target.value);
-          }}
-          data-testid="currency-select"
-        >
-          {data?.map((rate) => (
-            <option key={rate.code} value={rate.code}>
-              {rate.code}
-            </option>
-          ))}
-        </Select>
-        {result != null && (
-          // always round down to present a more conservative estimate
-          <div data-testid="result">
-            Converted Amount: {floorWithFixedPrecision(result, 2)} {currency}
-          </div>
-        )}
+        <table>
+          <tr>
+            <td colSpan="2">
+              <InputWithUnit
+                type="number"
+                value={amount || ""}
+                onChange={(e) => {
+                  setAmount(e.target.value ? parseFloat(e.target.value) : 0);
+                }}
+                placeholder="Amount in CZK"
+                data-testid="amount-input"
+                unit="CZK"
+                // Allow only positive numbers with up to 2 decimal places
+                regexp={/^\d*\.?\d{0,2}$/}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Input
+                type="number"
+                // always round down to present a more conservative estimate
+                value={result ? floorWithFixedPrecision(result, 2) : 0}
+                readOnly
+                placeholder="Converted amount"
+                data-testid="result"
+              />
+            </td>
+            <td>
+              <Select
+                value={currency}
+                onChange={(e) => {
+                  setCurrency(e.target.value);
+                }}
+                data-testid="currency-select"
+              >
+                {data?.map((rate) => (
+                  <option key={rate.code} value={rate.code}>
+                    {rate.code}
+                  </option>
+                ))}
+              </Select>
+            </td>
+          </tr>
+        </table>
       </Form>
     </div>
   );

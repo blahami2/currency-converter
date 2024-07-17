@@ -38,6 +38,7 @@ beforeEach(() => {
 
 test("should display available rates", () => {
   // when
+  // - data loaded
   // then
   expect(tableElement.textContent).toContain(
     "CountryCurrencyAmountCodeRate" +

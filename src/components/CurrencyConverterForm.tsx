@@ -7,7 +7,6 @@ import { floorWithFixedPrecision } from "../utils/math";
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  max-width: 400px;
   margin: 20px auto;
 `;
 
@@ -59,6 +58,7 @@ const CurrencyConverterForm: React.FC = () => {
           type="number"
           value={amount}
           onChange={(e) => {
+            // TODO add CZK as unit (create a react component), add restrictions (e.g. only positive numbers, only 2 decimals)
             setAmount(e.target.value ? parseFloat(e.target.value) : 0);
           }}
           placeholder="Amount in CZK"

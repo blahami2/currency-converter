@@ -14,7 +14,7 @@ const rates = [
   { country: "United States", currency: "Dollar", amount: 1, code: "USD", rate: 21.6 },
   { country: "Eurozone", currency: "Euro", amount: 1, code: "EUR", rate: 25.5 },
   { country: "Great Britain", currency: "Pound", amount: 1, code: "GBP", rate: 29.7 },
-  { country: "Switzerland", currency: "Franc", amount: 100, code: "CHF", rate: 23.6 }, // TODO reflect amount
+  { country: "Turkey", currency: "Lira", amount: 100, code: "TRY", rate: 23.6 },
 ];
 let inputElement: HTMLInputElement;
 let selectElement: HTMLSelectElement;
@@ -90,11 +90,19 @@ test("calculates and displays converted amount when amount or currency is change
   fireEvent.change(selectElement, { target: { value: "USD" } });
   // then#2
   // - check the correct converted amount is displayed
-  expect(screen.getByText(/Converted Amount: 4.63 USD/i)).toBeInTheDocument();
+  expect(screen.getByText(/Converted Amount: 4.62 USD/i)).toBeInTheDocument();
   // when#3
   // - change the amount
   fireEvent.change(inputElement, { target: { value: "200" } });
   // then#3
   // - check the correct converted amount is displayed
-  expect(screen.getByText(/Converted Amount: 9.26 USD/i)).toBeInTheDocument();
+  expect(screen.getByText(/Converted Amount: 9.25 USD/i)).toBeInTheDocument();
+});
+
+test("rate amount is properly reflected in calculation", () => {
+  // when
+  fireEvent.change(selectElement, { target: { value: "TRY" } });
+  fireEvent.change(inputElement, { target: { value: "100" } });
+  // then
+  expect(screen.getByText(/Converted Amount: 423.72 TRY/i)).toBeInTheDocument();
 });

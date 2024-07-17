@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useExchangeRates } from "../hooks/useExchangeRates";
+import { ExchangeRate } from "../models/ExchangeRate";
+import { floorWithFixedPrecision } from "../utils/math";
 
 const Form = styled.form`
   display: flex;
@@ -19,6 +21,10 @@ const Select = styled.select`
   padding: 10px;
 `;
 
+function calculateAmountInCzk(amount: number, rate: ExchangeRate): number {
+  return (rate.amount * amount) / rate.rate;
+}
+
 const CurrencyConverterForm: React.FC = () => {
   const { data, error, isLoading } = useExchangeRates();
 
@@ -35,8 +41,10 @@ const CurrencyConverterForm: React.FC = () => {
 
   useEffect(() => {
     // calculate result when amount or currency changes or data load
-    const rate = data?.find((rate) => rate.code === currency)?.rate || 1;
-    amount && setResult(amount / rate);
+    const exchangeRate = data?.find((rate) => rate.code === currency);
+    if (amount && exchangeRate) {
+      setResult(calculateAmountInCzk(amount, exchangeRate));
+    }
   }, [amount, currency, data]);
 
   if (isLoading) return <div>Loading...</div>;
@@ -70,8 +78,9 @@ const CurrencyConverterForm: React.FC = () => {
           ))}
         </Select>
         {result != null && (
+          // always round down to present a more conservative estimate
           <div data-testid="result">
-            Converted Amount: {result.toFixed(2)} {currency}
+            Converted Amount: {floorWithFixedPrecision(result, 2)} {currency}
           </div>
         )}
       </Form>

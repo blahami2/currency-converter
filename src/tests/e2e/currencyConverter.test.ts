@@ -40,6 +40,6 @@ test.describe("Currency Converter", () => {
     await page.selectOption('[data-testid="currency-select"]', "EUR");
     // then
     const resultText = await page.textContent('[data-testid="result"]');
-    expect(resultText).toContain("Converted Amount: 37.74 EUR");
+    expect(resultText).toContain("Converted Amount: 37.73 EUR");
   });
 });

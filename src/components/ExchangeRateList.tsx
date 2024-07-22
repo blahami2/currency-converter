@@ -33,6 +33,7 @@ const ExchangeRateList: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error?.message}</div>;
 
+  // TODO make only data scrollable but keep header fixed?
   return (
     <div>
       <h2>Exchange Rates</h2>

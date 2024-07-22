@@ -10,7 +10,7 @@ const fetchExchangeRates = async (): Promise<ExchangeRate[]> => {
   return lines
     .map((line: string) => {
       const [country, currency, amount, code, rate] = line.split("|");
-      // Example condition: check if any field is empty
+      // Example condition: check if any field is empty TODO be more defensive
       if (!country || !currency || !amount || !code || !rate) {
         return null;
       }
@@ -26,5 +26,8 @@ const fetchExchangeRates = async (): Promise<ExchangeRate[]> => {
 };
 
 export const useExchangeRates = (): UseQueryResult<ExchangeRate[], Error> => {
-  return useQuery(["exchangeRates"], fetchExchangeRates);
+  return useQuery({
+    queryKey: ["exchangeRates"],
+    queryFn: fetchExchangeRates,
+  });
 };

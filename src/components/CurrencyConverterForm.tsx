@@ -5,7 +5,6 @@ import { ExchangeRate } from "../models/ExchangeRate";
 import { floorWithFixedPrecision } from "../utils/math";
 import InputWithUnit from "./InputWithUnit";
 
-// Styled components
 const StyledForm = styled.div`
   display: flex;
   flex-direction: column;

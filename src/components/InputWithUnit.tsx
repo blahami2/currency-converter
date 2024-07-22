@@ -37,10 +37,12 @@ const InputWithUnit: React.FC<InputWithUnitProps> = ({ unit, regexp, onChange, .
   };
 
   return (
-    <InputContainer>
-      <Input {...props} onChange={handleChange} />
-      <UnitContainer>{unit}</UnitContainer>
-    </InputContainer>
+    <div className={props.className}>
+      <InputContainer>
+        <Input {...props} onChange={handleChange} />
+        <UnitContainer>{unit}</UnitContainer>
+      </InputContainer>
+    </div>
   );
 };
 

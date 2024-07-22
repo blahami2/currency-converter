@@ -40,3 +40,7 @@ npm run test:jest
 ```bash
 npm run test:playwright
 ```
+
+## Demo
+
+available at [Currency Exchange | Netlify](https://blahami2-currency-exchange.netlify.app/)

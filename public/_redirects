@@ -1,3 +1,1 @@
 /api/*  https://www.cnb.cz/:splat  200
-/best-pets/dogs  /best-pets/cats.html 200!
-/app/*  /app/index.html  200!

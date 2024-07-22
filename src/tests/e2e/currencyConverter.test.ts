@@ -39,7 +39,11 @@ test.describe("Currency Converter", () => {
     await page.fill('[data-testid="amount-input"]', "1000");
     await page.selectOption('[data-testid="currency-select"]', "EUR");
     // then
-    const resultText = await page.textContent('[data-testid="result"]');
-    expect(resultText).toContain("Converted Amount: 37.73 EUR");
+    const inputText = await page.inputValue('[data-testid="amount-input"]');
+    expect(inputText).toBe("1000");
+    const selectText = await page.textContent('[data-testid="currency-select"]');
+    expect(selectText).toContain("EUR");
+    const resultText = await page.inputValue('[data-testid="amount-output"]');
+    expect(resultText).toContain("37.73");
   });
 });

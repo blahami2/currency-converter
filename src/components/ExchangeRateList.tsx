@@ -2,6 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useExchangeRates } from "../hooks/useExchangeRates";
 
+const ScrollableTableContainer = styled.div`
+  background-color: hsla(0, 0%, 98%, 0.137);
+  max-height: 30vh; // Adjust based on your needs
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+`;
+
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -29,28 +36,30 @@ const ExchangeRateList: React.FC = () => {
   return (
     <div>
       <h2>Exchange Rates</h2>
-      <Table data-testid="currency-table">
-        <thead>
-          <TableRow>
-            <TableHeader>Country</TableHeader>
-            <TableHeader>Currency</TableHeader>
-            <TableHeader>Amount</TableHeader>
-            <TableHeader>Code</TableHeader>
-            <TableHeader>Rate</TableHeader>
-          </TableRow>
-        </thead>
-        <tbody>
-          {data?.map((rate) => (
-            <TableRow key={rate.code}>
-              <TableData>{rate.country}</TableData>
-              <TableData>{rate.currency}</TableData>
-              <TableData>{rate.amount}</TableData>
-              <TableData>{rate.code}</TableData>
-              <TableData>{rate.rate}</TableData>
+      <ScrollableTableContainer>
+        <Table data-testid="currency-table">
+          <thead>
+            <TableRow>
+              <TableHeader>Country</TableHeader>
+              <TableHeader>Currency</TableHeader>
+              <TableHeader>Amount</TableHeader>
+              <TableHeader>Code</TableHeader>
+              <TableHeader>Rate</TableHeader>
             </TableRow>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {data?.map((rate) => (
+              <TableRow key={rate.code}>
+                <TableData>{rate.country}</TableData>
+                <TableData>{rate.currency}</TableData>
+                <TableData>{rate.amount}</TableData>
+                <TableData>{rate.code}</TableData>
+                <TableData>{rate.rate}</TableData>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+      </ScrollableTableContainer>
     </div>
   );
 };

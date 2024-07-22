@@ -22,7 +22,7 @@ const FullWidthInput = styled(InputWithUnit)`
   width: 100%;
 `;
 
-const HalfWidthInput = styled.input`
+const PartialWidthInput = styled.input`
   margin: 10px 0;
   padding: 10px;
   width: 82%;
@@ -65,8 +65,6 @@ const CurrencyConverterForm: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error?.message}</div>;
 
-  // TODO fix formatting
-
   return (
     <div>
       <h2>Currency Converter</h2>
@@ -85,13 +83,13 @@ const CurrencyConverterForm: React.FC = () => {
           regexp={/^\d*\.?\d{0,2}$/}
         />
         <Row>
-          <HalfWidthInput
+          <PartialWidthInput
             type="text"
             // always round down to present a more conservative estimate
             value={result ? floorWithFixedPrecision(result, 2) : ""}
             readOnly
             placeholder="Converted amount"
-            data-testid="result"
+            data-testid="amount-output"
           />
           <Select
             value={currency}

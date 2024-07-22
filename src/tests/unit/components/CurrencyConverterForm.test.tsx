@@ -18,6 +18,7 @@ const rates = [
 ];
 let inputElement: HTMLInputElement;
 let selectElement: HTMLSelectElement;
+let resultElement: HTMLInputElement;
 
 beforeEach(() => {
   // given
@@ -36,6 +37,7 @@ beforeEach(() => {
   );
   inputElement = screen.getByTestId("amount-input") as HTMLInputElement;
   selectElement = screen.getByTestId("currency-select") as HTMLSelectElement;
+  resultElement = screen.getByTestId("amount-output") as HTMLInputElement;
 });
 
 test("renders Currency Converter heading", () => {
@@ -51,7 +53,8 @@ test("handles empty amount", () => {
   // when
   fireEvent.change(inputElement, { target: { value: "" } });
   // then
-  expect(screen.getByText(/Converted Amount: 0.00 USD/i)).toBeInTheDocument();
+  expect(resultElement).toBeEmptyDOMElement;
+  expect(resultElement.placeholder).toBe("Converted amount");
 });
 
 test("renders Convert CZK to another currency heading", () => {
@@ -84,19 +87,19 @@ test("calculates and displays converted amount when amount or currency is change
   fireEvent.change(selectElement, { target: { value: "EUR" } });
   // then#1
   // - check the correct converted amount is displayed
-  expect(screen.getByText(/Converted Amount: 3.92 EUR/i)).toBeInTheDocument();
+  expect(resultElement.value).toBe("3.92");
   // when#2
   // - change the currency
   fireEvent.change(selectElement, { target: { value: "USD" } });
   // then#2
   // - check the correct converted amount is displayed
-  expect(screen.getByText(/Converted Amount: 4.62 USD/i)).toBeInTheDocument();
+  expect(resultElement.value).toBe("4.62");
   // when#3
   // - change the amount
   fireEvent.change(inputElement, { target: { value: "200" } });
   // then#3
   // - check the correct converted amount is displayed
-  expect(screen.getByText(/Converted Amount: 9.25 USD/i)).toBeInTheDocument();
+  expect(resultElement.value).toBe("9.25");
 });
 
 test("rate amount is properly reflected in calculation", () => {
@@ -104,5 +107,5 @@ test("rate amount is properly reflected in calculation", () => {
   fireEvent.change(selectElement, { target: { value: "TRY" } });
   fireEvent.change(inputElement, { target: { value: "100" } });
   // then
-  expect(screen.getByText(/Converted Amount: 423.72 TRY/i)).toBeInTheDocument();
+  expect(resultElement.value).toBe("423.72");
 });

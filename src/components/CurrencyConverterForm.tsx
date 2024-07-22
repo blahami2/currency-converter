@@ -30,7 +30,8 @@ const PartialWidthInput = styled.input`
 const Select = styled.select`
   margin: 10px 0;
   padding: 10px;
-  width: 15%; // Adjust for margin/padding
+  width: 15%;
+  min-width: 50px;
 `;
 
 function calculateAmountInCzk(amount: number, rate: ExchangeRate): number {

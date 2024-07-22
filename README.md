@@ -1,5 +1,7 @@
 # Currency converter
 
+![Node.js CI](https://github.com/blahami2/currency-converter/actions/workflows/node.js.yml/badge.svg)
+
 ## Task description
 
 Create a simple React app (don’t use NextJS please), which:

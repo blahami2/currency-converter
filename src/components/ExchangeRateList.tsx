@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useExchangeRates } from "../hooks/useExchangeRates";
 
 const ScrollableTableContainer = styled.div`
-  background-color: hsla(0, 0%, 98%, 0.137);
-  max-height: 30vh; // Adjust based on your needs
+  border-top: 1px solid #ddd;
+  background-color: #494949;
+  max-height: 40vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;
@@ -15,9 +16,12 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.th`
-  border: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  border-left: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  background-color: #494949;
 `;
 
 const TableRow = styled.tr``;
@@ -33,7 +37,6 @@ const ExchangeRateList: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error?.message}</div>;
 
-  // TODO make only data scrollable but keep header fixed?
   return (
     <div>
       <h2>Exchange Rates</h2>
